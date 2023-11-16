@@ -65,6 +65,18 @@ async function translateText(projectId: string, text: string, sourceLanguageCode
   return response.translations[0].translatedText;
 }
 
+const normalizeTranslation = (translated?: string) => {
+  if (!translated) return "";
+  if (translated.match(/^[^(\r\n]*\).*?$/g) && translated.match(/\)$/g)) {
+    return translated.slice(0, -1);
+  }
+  if (translated.match(/^To /g)) {
+    return translated.slice(3);
+  }
+
+  return translated;
+}
+
 const translate = async (projectId: string, obj: Record<string, unknown>, ref: Record<string, unknown>, changes: string[], defaultLocale: string, locale: string) => {
   const total = changes.length;
   for (const [_index, key] of Object.entries(changes)) {
@@ -90,7 +102,7 @@ const translate = async (projectId: string, obj: Record<string, unknown>, ref: R
     const translatedMatchs = translated?.match(/({.*?}|@:.*?\s|@:.*?$)/g);
     
     if (!matchs || !translatedMatchs) {
-      obj[key] = translated;
+      obj[key] = normalizeTranslation(translated);
       continue;
     };
 
@@ -102,7 +114,7 @@ const translate = async (projectId: string, obj: Record<string, unknown>, ref: R
       resolved = resolved.replace(translatedMatch, match);
     }
 
-    obj[key] = resolved;
+    obj[key] = normalizeTranslation(resolved);
   }
   return obj;
 }

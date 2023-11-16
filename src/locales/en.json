@@ -14,5 +14,7 @@
   "withBrackets": "my name is {value}",
   "withArroba": "my name is @:name",
   "withBoth": "my name is {value} and @:name",
-  "withTwo": "my name is @:withObject.name and @:name"
+  "withTwo": "my name is @:withObject.name and @:name",
+  "years": "years",
+  "enviar": "send"
 }

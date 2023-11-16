@@ -1,6 +1,8 @@
 {
   "name": "meu nome é",
   "anotherName": "meu nome é outro nome modificado",
+  "years": "ano(s)",
+  "enviar": "Enviar",
   "withObject": {
     "name": "meu nome é",
     "withBrackets": "meu nome é {value}",
