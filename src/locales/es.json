@@ -1,6 +1,6 @@
 {
   "name": "mi nombre es",
-  "anotherName": "mi nombre es otro nombre",
+  "anotherName": "mi nombre es otro nombre modificado",
   "withObject": {
     "name": "mi nombre es",
     "withBrackets": "mi nombre es {value}",

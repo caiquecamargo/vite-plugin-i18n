@@ -65,17 +65,17 @@ async function translateText(projectId: string, text: string, sourceLanguageCode
   return response.translations[0].translatedText;
 }
 
-const translate = async (projectId: string, obj: Record<string, unknown>, changes: string[], defaultLocale: string, locale: string) => {
+const translate = async (projectId: string, obj: Record<string, unknown>, ref: Record<string, unknown>, changes: string[], defaultLocale: string, locale: string) => {
   const total = changes.length;
   for (const [_index, key] of Object.entries(changes)) {
     const index = Number(_index);
     process.stdout.write(`\r -> [${index + 1}/${total}] - ${key}`);
 
-    const value = getProp(obj, key) as string | Record<string, unknown> | undefined;
+    const value = getProp(ref, key) as string | Record<string, unknown> | undefined;
 
     if (!value) continue;
     if (typeof value !== 'string') {
-      setProp(obj, key, await translate(projectId, value, Object.keys(value), defaultLocale, locale));
+      setProp(obj, key, await translate(projectId, value, getProp(obj, key) as Record<string, unknown>, Object.keys(value), defaultLocale, locale));
 
       continue;
     };
@@ -151,7 +151,9 @@ export const createTranslations = async (root: string, entry?: I18nConfig) => {
 
   for (const locale of locales.filter((locale) => locale !== defaultLocale)) {
     consola.start(`Translating to ${locale}`);
-    const translated = await translate(projectId, JSON.parse(file), changes, defaultLocale, locale);
+    const localeFile = await tryReadFile(path.join(root, folder, `${locale}.json`));
+
+    const translated = await translate(projectId, JSON.parse(localeFile ?? "{}"), JSON.parse(file), changes, defaultLocale, locale);
 
     if (!translated) continue;
 
