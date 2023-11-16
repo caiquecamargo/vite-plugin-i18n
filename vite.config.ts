@@ -1,4 +1,5 @@
 /// <reference types="vitest" />
+import typescript from "@rollup/plugin-typescript";
 import path from "path";
 import { defineConfig } from "vite";
 
@@ -30,7 +31,14 @@ export default defineConfig({
       },
     },
   },
-  plugins: [],
+  plugins: [
+    typescript({
+      sourceMap: true,
+      declaration: true,
+      outDir: "dist",
+      exclude: ["src/**/*.spec.ts", "src/demo.ts"],
+    })
+  ],
   test: {
     environment: "happy-dom",
   },

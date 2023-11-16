@@ -104,7 +104,7 @@ const translate = async (projectId: string, obj: Record<string, unknown>, change
   return obj;
 }
 
-type I18nConfig = {
+export type I18nConfig = {
   locales: string[];
   defaultLocale: string;
   folder: string;
