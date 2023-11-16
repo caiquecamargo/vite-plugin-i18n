@@ -1,6 +1,6 @@
 {
   "name": "@caiquecamargo/vite-plugin-i18n",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
@@ -42,10 +42,12 @@
   "dependencies": {
     "@caiquecamargo/utils": "^0.1.5",
     "@google-cloud/translate": "^8.0.2",
+    "consola": "^3.2.3",
     "ohash": "^1.1.3"
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^11.1.5",
+    "dotenv": "^16.3.1",
     "happy-dom": "^12.10.3",
     "nodemon": "^3.0.1",
     "ts-node": "^10.9.1",

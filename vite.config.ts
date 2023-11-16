@@ -16,11 +16,12 @@ export default defineConfig({
     rollupOptions: {
       treeshake: true,
       preserveEntrySignatures: "exports-only",
-      external: ["url", "fs/promises", "path", "vite", "ohash", "@google-cloud/translate"],
+      external: ["url", "fs/promises", "path", "vite", "ohash", "@google-cloud/translate", "consola"],
       output: {
         sourcemap: true,
         exports: "named",
         globals: {
+          consola: "consola",
           ohash: "ohash",
           vite: "vite",
           "fs/promises": "fs",

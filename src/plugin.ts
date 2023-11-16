@@ -4,6 +4,7 @@ import { Plugin } from "vite";
 import { diff } from 'ohash';
 import { TranslationServiceClient } from '@google-cloud/translate';
 import { getProp, list, setProp } from '@caiquecamargo/utils/core';
+import { consola } from 'consola';
 
 const createFolderIfNotExists = async (path: string) => {
   try {
@@ -15,9 +16,7 @@ const createFolderIfNotExists = async (path: string) => {
 
 const tryReadFile = async (path: string) => {
   try {
-    console.log(path)
     const file = await readFile(path, "utf-8");
-
 
     return file;
   } catch {
@@ -67,7 +66,11 @@ async function translateText(projectId: string, text: string, sourceLanguageCode
 }
 
 const translate = async (projectId: string, obj: Record<string, unknown>, changes: string[], defaultLocale: string, locale: string) => {
-  for (const key of changes) {
+  const total = changes.length;
+  for (const [_index, key] of Object.entries(changes)) {
+    const index = Number(_index);
+    process.stdout.write(`\r -> [${index + 1}/${total}] - ${key}`);
+
     const value = getProp(obj, key) as string | Record<string, unknown> | undefined;
 
     if (!value) continue;
@@ -81,9 +84,10 @@ const translate = async (projectId: string, obj: Record<string, unknown>, change
 
     if (!translated) continue;
 
+    process.stdout.write("\r                                                          \r")
+
     const matchs = value.match(/({.*?}|@:.*?\s|@:.*?$)/g);
     const translatedMatchs = translated?.match(/({.*?}|@:.*?\s|@:.*?$)/g);
-
     
     if (!matchs || !translatedMatchs) {
       obj[key] = translated;
@@ -100,7 +104,6 @@ const translate = async (projectId: string, obj: Record<string, unknown>, change
 
     obj[key] = resolved;
   }
-
   return obj;
 }
 
@@ -119,21 +122,40 @@ export const createTranslations = async (root: string, entry?: I18nConfig) => {
     projectId
   } = entry ?? {};
 
-  if (!projectId) return;
+  consola.start(`Creating translations for ${locales.join(", ")}`);
+
+  if (!projectId) {
+    consola.info(`No projectId provided, skipping translations`);
+
+    return;
+  };
 
   await createFolderIfNotExists(path.join(root, folder));
   const file = await tryReadFile(path.join(root, folder, `${defaultLocale}.json`));
 
-  if (!file) return;
+  if (!file) {
+    consola.error(`No default locale file found, skipping translations`);
+
+    return;
+  };
   
   const changes = await compareWithCached(file, path.join(root, folder));
 
-  if (!changes) return;
+  if (!changes || !changes.length) {
+    consola.info(`No changes found, skipping translations`);
+
+    return;
+  };
+
+  consola.log(`Found ${changes.length} changes, translating...`)
 
   for (const locale of locales.filter((locale) => locale !== defaultLocale)) {
+    consola.start(`Translating to ${locale}`);
     const translated = await translate(projectId, JSON.parse(file), changes, defaultLocale, locale);
 
     if (!translated) continue;
+
+    consola.success(`Translated to ${locale}`);
 
     await writeFile(path.join(root, folder, `${locale}.json`), JSON.stringify(translated, null, 2), "utf-8");
   }

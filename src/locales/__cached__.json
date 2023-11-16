@@ -8,7 +8,7 @@
     "withBoth": "meu nome é {value} e @:name",
     "withTwo": "meu nome é @:withObject.name e @:name mudado",
     "anotherObject": {
-      "name": "My name is"
+      "name": "Meu nome é"
     }
   },
   "withBrackets": "meu nome é {value}",

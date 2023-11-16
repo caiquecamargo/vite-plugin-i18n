@@ -1,18 +1,18 @@
 {
-  "name": "meu nome é",
-  "anotherName": "meu nome é outro nome",
+  "name": "mi nombre es",
+  "anotherName": "mi nombre es otro nombre",
   "withObject": {
-    "name": "meu nome é",
-    "withBrackets": "meu nome é {value}",
-    "withArroba": "meu nome é @:name",
-    "withBoth": "meu nome é {value} e @:name",
-    "withTwo": "meu nome é @:withObject.name e @:name mudado",
+    "name": "mi nombre es",
+    "withBrackets": "mi nombre es {value}",
+    "withArroba": "mi nombre es @:name",
+    "withBoth": "mi nombre es {value} y @:name",
+    "withTwo": "mi nombre es @:withObject.name y @:name cambiado",
     "anotherObject": {
       "name": "Mi nombre es"
     }
   },
-  "withBrackets": "meu nome é {value}",
-  "withArroba": "meu nome é @:name",
-  "withBoth": "meu nome é {value} e @:name",
-  "withTwo": "meu nome é @:withObject.name e @:name"
+  "withBrackets": "mi nombre es {value}",
+  "withArroba": "mi nombre es @:name",
+  "withBoth": "mi nombre es {value} y @:name",
+  "withTwo": "mi nombre es @:withObject.name y @:name"
 }
