@@ -85,8 +85,6 @@ const translate = async (projectId: string, obj: Record<string, unknown>, ref: R
 
     const value = getProp(ref, key) as string | Record<string, unknown> | undefined;
 
-    console.log({ _index, key, value})
-
     if (!value) continue;
     if (typeof value !== 'string') {
       setProp(obj, key, await translate(projectId, (getProp(obj, key) ?? {}) as Record<string, unknown>, value, Object.keys(value), defaultLocale, locale));
