@@ -1,15 +1,14 @@
 {
   "name": "@caiquecamargo/vite-plugin-i18n",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "",
-  "main": "./dist/index.umd.js",
-  "module": "./dist/index.es.js",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
   "type": "module",
   "exports": {
     ".": {
-      "default": "./dist/index.es.js",
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js",
+      "default": "./dist/index.js",
+      "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     }
   },
