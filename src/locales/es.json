@@ -9,12 +9,15 @@
     "withTwo": "mi nombre es @:withObject.name y @:name cambiado",
     "anotherObject": {
       "name": "Mi nombre es"
-    }
+    },
+    "ages": "{age} años @:withObject.name cambiado"
   },
   "withBrackets": "mi nombre es {value}",
   "withArroba": "mi nombre es @:name",
   "withBoth": "mi nombre es {value} y @:name",
   "withTwo": "mi nombre es @:withObject.name y @:name",
   "years": "años",
-  "enviar": "Mandar"
+  "enviar": "Mandar",
+  "ages": "{age} años @:withObject.name",
+  "withObject.ages": "{age} años @:withObject.name"
 }

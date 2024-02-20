@@ -85,6 +85,8 @@ const translate = async (projectId: string, obj: Record<string, unknown>, ref: R
 
     const value = getProp(ref, key) as string | Record<string, unknown> | undefined;
 
+    console.log({ _index, key, value})
+
     if (!value) continue;
     if (typeof value !== 'string') {
       setProp(obj, key, await translate(projectId, (getProp(obj, key) ?? {}) as Record<string, unknown>, value, Object.keys(value), defaultLocale, locale));
@@ -102,7 +104,7 @@ const translate = async (projectId: string, obj: Record<string, unknown>, ref: R
     const translatedMatchs = translated?.match(/({.*?}|@:.*?\s|@:.*?$)/g);
     
     if (!matchs || !translatedMatchs) {
-      obj[key] = normalizeTranslation(translated);
+      setProp(obj, key, normalizeTranslation(translated));
       continue;
     };
 
@@ -114,7 +116,7 @@ const translate = async (projectId: string, obj: Record<string, unknown>, ref: R
       resolved = resolved.replace(translatedMatch, match);
     }
 
-    obj[key] = normalizeTranslation(resolved);
+    setProp(obj, key, normalizeTranslation(resolved));
   }
   return obj;
 }

@@ -11,10 +11,12 @@
     "withTwo": "meu nome é @:withObject.name e @:name mudado",
     "anotherObject": {
       "name": "Meu nome é"
-    }
+    },
+    "ages": "{age} anos @:withObject.name mudado"
   },
   "withBrackets": "meu nome é {value}",
   "withArroba": "meu nome é @:name",
   "withBoth": "meu nome é {value} e @:name",
-  "withTwo": "meu nome é @:withObject.name e @:name"
+  "withTwo": "meu nome é @:withObject.name e @:name",
+  "ages": "{age} anos @:withObject.name"
 }
